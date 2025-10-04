@@ -1,0 +1,483 @@
+/* Base chat layout */
+.chat-page {
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: transparent;
+}
+
+
+.chat-card {
+  width: 85%;
+  height: 560px;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #151518, #0f0f12);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+  color: #f5f7fb;
+  overflow: hidden;
+}
+.leave-btn {
+  background: #e74c3c; // red
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  padding: 6px 12px;
+  margin-left: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: #c0392b; // darker red
+  }
+}
+
+.chat-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.room-label {
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+.room-label span { color: #ffd54d; }
+
+.copy-btn {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #fff;
+  padding: 6px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 120ms ease, transform 120ms ease;
+}
+.copy-btn:hover { background: rgba(255,255,255,0.12); }
+.copy-btn:active { transform: translateY(1px); }
+
+.chat-card__messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  scrollbar-width: thin;
+}
+
+/* Regular chat messages */
+.msg {
+  max-width: 78%;
+  padding: 8px 10px;
+  border-radius: 12px;
+  line-height: 1.25;
+  font-size: 14px;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.msg-user {
+  font-size: 12px;
+  opacity: 0.7;
+}
+// .msg-line {
+//   font-size: 14px;
+//   word-break: break-word;
+// }
+
+// .sent .msg-line {
+//   color: #fff;
+// }
+
+// .received .msg-line {
+//   color: #e8ecf3;
+// }
+
+.msg-text { word-break: break-word; }
+
+.sent {
+  align-self: flex-end;
+  background: linear-gradient(180deg, #3b82f6, #2563eb);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.received {
+  align-self: flex-start;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #e8ecf3;
+  border-bottom-left-radius: 4px;
+}
+
+
+.send-btn {
+  background: linear-gradient(180deg, #22c55e, #16a34a);
+  color: #0a0a0b;
+  font-weight: 700;
+  border: none;
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: filter 120ms ease, transform 120ms ease;
+}
+.send-btn:hover { filter: brightness(1.05); }
+.send-btn:active { transform: translateY(1px); }
+
+/* File and image messages */
+.file-message {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.msg-image {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+  display: block;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.image-container:hover .image-overlay { opacity: 1; }
+
+.download-btn, .view-btn {
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.download-btn:hover, .view-btn:hover {
+  background: white;
+  transform: scale(1.1);
+}
+
+/* ✅ System notifications (centered join/leave) */
+.system-notification {
+  display: flex;
+  justify-content: center;
+  margin: 4px 0;   /* pehle 12px tha, ab chhota */
+  width: 100%;
+}
+
+
+.system-text {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffd54d;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  font-style: italic;
+  text-align: center;
+  max-width: 85%;
+  word-wrap: break-word;
+}
+
+/* File preview */
+.file-link {
+  color: #ffd54d;
+  text-decoration: none;
+  font-size: 14px;
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  display: inline-block;
+}
+.file-link:hover { background: rgba(255, 255, 255, 0.2); }
+
+.file-preview {
+  padding: 12px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.04));
+}
+.preview-content {
+  position: relative;
+  display: inline-block;
+}
+.preview-image {
+  max-width: 150px;
+  max-height: 150px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.preview-file {
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #e8ecf3;
+  font-size: 14px;
+}
+.remove-file-btn {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Add these styles to your existing chat.component.scss */
+/* Add these styles to your existing chat.component.scss */
+
+.file-link-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  max-width: 300px;
+  transition: background-color 0.2s ease;
+}
+
+.file-link-container:hover {
+  background-color: #e8f4f8;
+  border-color: #2196F3;
+}
+
+.file-icon {
+  font-size: 20px;
+}
+
+.file-name {
+  font-weight: 500;
+  color: #333;
+  word-break: break-all;
+}
+
+.msg-image {
+  border-radius: 8px;
+  max-width: 300px;
+  max-height: 200px;
+  object-fit: cover;
+  transition: opacity 0.2s ease;
+}
+
+.msg-image:hover {
+  opacity: 0.8;
+}
+
+/* Optional: Add a subtle download indicator on hover */
+.file-link-container::after {
+  // content: "⬇️";
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.file-link-container:hover::after {
+  opacity: 1;
+}
+
+.emoji-container {
+  position: absolute;
+  bottom: 60px;   /* just above input bar */
+  left: 20px;
+  width: 320px;   /* control size */
+  height: 250px;  /* fixed height for scroll */
+  background: #1e1e22;  /* match chat theme */
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+  overflow-y: auto;   /* 🔥 this makes it scrollable */
+  z-index: 100;
+}
+/* 🔥 Hide category tabs + labels in emoji-mart */
+emoji-mart .emoji-mart-category-label,
+emoji-mart .emoji-mart-anchor {
+  display: none !important;
+}
+
+/* Optional: adjust padding since categories are hidden */
+emoji-mart .emoji-mart {
+  padding-top: 8px !important;
+}
+/* Emoji panel below input (full width) */
+.emoji-panel {
+  width: 100%;
+  height: 280px; /* adjust as needed */
+  background: #1e1e22;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  overflow-y: auto;
+  transition: max-height 0.3s ease;
+}
+
+/* Make emoji grid fill the space */
+.emoji-panel emoji-mart {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Hide extra controls from emoji-mart (categories, search, etc.) */
+:host ::ng-deep .emoji-mart-anchors,
+:host ::ng-deep .emoji-mart-search,
+:host ::ng-deep .emoji-mart-preview,
+:host ::ng-deep .emoji-mart-title {
+  display: none !important;
+}
+::ng-deep section.emoji-mart.emoji-mart-dark {
+    width: 100% !important;
+}
+
+/* Responsive adjustments */
+.Btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 45px;
+  height: 45px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition-duration: .3s;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+  background-color: rgb(255, 65, 65);
+}
+
+/* plus sign */
+.sign {
+  width: 100%;
+  transition-duration: .3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sign svg {
+  width: 17px;
+}
+
+.sign svg path {
+  fill: white;
+}
+/* text */
+.text {
+  position: absolute;
+  right: 0%;
+  width: 0%;
+  opacity: 0;
+  color: white;
+  font-size: 1.2em;
+  font-weight: 600;
+  transition-duration: .3s;
+}
+/* hover effect on button width */
+.Btn:hover {
+  width: 125px;
+  border-radius: 40px;
+  transition-duration: .3s;
+}
+
+.Btn:hover .sign {
+  width: 30%;
+  transition-duration: .3s;
+  padding-left: 20px;
+}
+/* hover effect button's text */
+.Btn:hover .text {
+  opacity: 1;
+  width: 70%;
+  transition-duration: .3s;
+  padding-right: 10px;
+}
+/* button click effect*/
+.Btn:active {
+  transform: translate(2px ,2px);
+}
+/* --- Feedback Button (fixed corner button) --- */
+.feedback-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #ff6a00;
+  color: #fff;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: background 0.3s ease, transform 0.2s ease;
+  z-index: 999;
+}
+
+.feedback-btn:hover {
+  background: #e65c00;
+  transform: translateY(-2px);
+}
+.circular-timer {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  margin-left: 5px;
+  vertical-align: middle;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+
+    .circle-bg {
+      fill: none;
+      stroke: #eee;
+      stroke-width: 3;
+    }
+
+    .circle {
+      fill: none;
+      stroke: #ff5555;
+      stroke-width: 3;
+      stroke-linecap: round;
+      transition: stroke-dasharray 1s linear;
+    }
+  }
+}

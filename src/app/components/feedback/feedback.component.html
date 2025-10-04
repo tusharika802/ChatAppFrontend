@@ -1,0 +1,9 @@
+<div class="feedback-popup">
+  <h3>Submit Feedback</h3>
+  <textarea [(ngModel)]="issue" placeholder="Enter your feedback"></textarea>
+
+  <div class="actions">
+    <button (click)="submitFeedback()">Send</button>
+    <button (click)="close()">Cancel</button>
+  </div>
+</div>

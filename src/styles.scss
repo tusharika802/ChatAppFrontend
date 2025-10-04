@@ -1,0 +1,17 @@
+html, body, app-root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-image: url('https://static.vecteezy.com/system/resources/previews/027/807/583/non_2x/spooky-halloween-wallpaper-with-pumpkin-and-old-house-free-photo.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+}
+
+* {
+  box-sizing: border-box;
+}
+

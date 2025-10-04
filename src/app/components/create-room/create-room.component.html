@@ -1,0 +1,16 @@
+<div class="create-container">
+  <div class="card">
+    <div class="card-header name-area">Welcome {{ userId || 'Your Name' }}</div>
+
+    <div class="card-body">
+      <div class="code-row">
+        <span class="room-code">{{ room }}</span>
+        <button type="button" class="copy-btn" (click)="copyCode()"> {{ copyBtnText }}</button>
+      </div>
+
+      <button type="button" class="primary-btn" (click)="startChatClick()" [disabled]="!userId || !room">
+        Start Chat
+      </button>
+    </div>
+  </div>
+</div>

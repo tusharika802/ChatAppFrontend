@@ -1,0 +1,14 @@
+<div class="create-container">
+  <div class="card">
+    <div class="card-header name-area">🎃 Welcome to Chat 🎃</div>
+
+    <div class="card-body">
+      <input type="text" [(ngModel)]="userId" placeholder="Enter your name" class="text-input" />
+
+      <div class="actions-row">
+        <button type="button" class="primary-btn" (click)="create()" [disabled]="!userId">Create Room</button>
+        <button type="button" class="secondary-btn" (click)="join()" [disabled]="!userId">Join Room</button>
+      </div>
+    </div>
+  </div>
+</div>

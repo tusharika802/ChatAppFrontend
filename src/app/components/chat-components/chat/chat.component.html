@@ -1,0 +1,103 @@
+<div class="chat-page">
+  <div class="chat-card">
+    <div class="chat-card__header">
+      <div class="room-info">
+        <span class="room-label">Room Code: <span>{{ room }}</span></span>
+        <button class="copy-btn" (click)="copyCode()">{{ copyBtnText }}</button>
+      </div>
+
+      <button class="Btn" (click)="leaveRoom()">
+
+        <div class="sign"><svg viewBox="0 0 512 512">
+            <path
+              d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z">
+            </path>
+          </svg></div>
+
+        <div class="text">Leave Room</div>
+      </button>
+
+
+    </div>
+
+    <div class="chat-card__messages">
+      @for (msg of messages; track msg) {
+      <div>
+        <!-- System notifications -->
+        @if (msg.action === 'system') {
+        <div class="system-notification">
+          <span class="system-text">{{ msg.text }}</span>
+        </div>
+        }
+        <!-- Regular messages -->
+        @if (msg.action !== 'system') {
+        <div class="msg" [ngClass]="msg.userId === userId ? 'sent' : 'received'">
+          <!-- Inline: Username + message text (only for others) -->
+          @if (msg.type !== 'file') {
+          <span class="msg-text">
+            @if (msg.userId !== userId) {
+            <strong>{{ msg.userId }}:</strong>&nbsp;
+            }
+            {{ msg.text }}
+          </span>
+          } 
+          @else {
+          <div class="file-message">
+            @if (isImage(msg.originalName || msg.filename)) {
+            <div class="image-container">
+              <img [src]="msg.url" [alt]="msg.originalName || msg.filename" class="msg-image"
+                (keypress.enter)="downloadFile(msg.url, msg.filename, msg.originalName)"
+                (click)="downloadFile(msg.url, msg.filename, msg.originalName)" (error)="showFileLink($event)"
+                style="cursor: pointer;" title="Click to download" tabindex="0" />
+            </div>
+            }
+            @if (!isImage(msg.originalName || msg.filename)) {
+            <div class="file-link-container" (keypress.enter)="downloadFile(msg.url, msg.filename, msg.originalName)"
+              (click)="downloadFile(msg.url, msg.filename, msg.originalName)" style="cursor: pointer;"
+              title="Click to download (will delete from chat)" tabindex="1">
+              @if (msg.userId !== userId) {
+              <span><strong>{{ msg.userId }}:</strong>&nbsp;</span>
+              }
+              <span class="file-icon">📎</span>
+              <span class="file-name">{{ msg.originalName || msg.filename }}</span>
+            </div>
+            }
+          </div>
+          }
+          <!-- File messages -->
+        </div>
+        }
+      </div>
+      }
+    </div>
+
+    <!-- File preview -->
+    @if (selectedFile) {
+    <div class="file-preview">
+      <div class="preview-content">
+        @if (filePreview) {
+        <img [src]="filePreview" class="preview-image" alt="preview">
+        }
+        @if (!filePreview) {
+        <div class="preview-file">
+          🔗 {{ selectedFile.name }}
+        </div>
+        }
+        <button class="remove-file-btn" (click)="clearFile()" title="Remove file">✕</button>
+      </div>
+    </div>
+    }
+    <app-chat-bar></app-chat-bar>
+  </div>
+  
+  <button class="feedback-btn" (click)="openFeedback()">Give Feedback</button>
+
+  <!-- Feedback Popup -->
+  @if (showFeedback) {
+    <app-feedback
+      [userId]="userId"
+      [room]="room"
+      (feedbackClosed)="closeFeedback()"
+    ></app-feedback>
+
+  }
